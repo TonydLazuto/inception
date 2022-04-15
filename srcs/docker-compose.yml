@@ -1,0 +1,29 @@
+version:'3'
+
+services:
+	nginx:
+		image: nginx
+		ports:
+		- 443:443
+		environment:
+		- ENV=value
+	wordpress:
+		image: wordpress
+		ports:
+		- 9000:9000
+		environment:
+		- ENV=value
+		volumes:
+		- wp-data:/var/lib/wp/data
+	mariadb:
+		image: mariadb
+		ports:
+		- 3306:3306
+		environment:
+		- ENV=value
+		volumes:
+		- mariadb-data:/var/lib/mariadb/data
+volumes:
+	mariadb-data:
+		driver: local
+   
