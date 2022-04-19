@@ -2,27 +2,39 @@ version:'3'
 
 services:
 	nginx:
+        container-name: dev_nginx
 		image: nginx
 		ports:
 		- 443:443
 		environment:
 		- ENV=value
+        volumes:
+        - ./requirements/nginx/nginx/conf:/etc/nginx/conf.d/default.conf
+        - ./requirements/nginx/conf/logs/nginx-access.log:/etc/nginx/access.log
+        - ./requirements/nginx/conf/logs/nginx-error.log:/etc/nginx/error.log
+		- :/etc/nginx/ssl/key.crt
+		- :/etc/nginx/ssl/mykey.key
 	wordpress:
+        container-name: dev_wp
 		image: wordpress
 		ports:
-		- 9000:9000
+		- 8081:80
 		environment:
-		- ENV=value
+        - MYSQL_ROOT_PASSWORD: 'pass'
+        - MYSQL_DATABASE: 'dev_db'
+        - MYSQL_USER: 'dev_user'
+        - MYSQL_PASSWORD: 'pass'
 		volumes:
-		- wp-data:/var/lib/wp/data
+        -/home/aderose/data/html:var/www/html
 	mariadb:
+        container-name: dev_mariadb
 		image: mariadb
 		ports:
 		- 3306:3306
 		environment:
 		- ENV=value
 		volumes:
-		- mariadb-data:/var/lib/mariadb/data
+		- /home/aderose/data/mariadb/data:/var/lib/mariadb/data
 volumes:
 	mariadb-data:
 		driver: local

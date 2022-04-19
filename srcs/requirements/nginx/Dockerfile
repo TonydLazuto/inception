@@ -1,4 +1,4 @@
-FROM alpine:3.15
+FROM alpine:3.15.4
 
 RUN sudo apt-get -y update \
     && sudo apt-get -y upgrade \
