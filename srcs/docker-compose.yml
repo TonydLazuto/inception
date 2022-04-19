@@ -26,4 +26,6 @@ services:
 volumes:
 	mariadb-data:
 		driver: local
+	wp-data:
+		driver: local
    
