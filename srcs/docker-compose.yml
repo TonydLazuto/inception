@@ -2,17 +2,22 @@ version: "3"
 
 services:
 
-  mysql:
-    container_name: mariadb
-    image: mariadb
+  nginx:
+    build: ./requirements/nginx
+    image: nginx:mynginx
+    container_name: nginx
     ports:
-      - 3306:3306
+      - 443:443
     volumes:
-      - /data/mysql:/var/lib/mysql
-    environment:
-      MYSQL_ROOT_PASSWORD: mysql_root_pass
-      MYSQL_DATABASE: db_name
-      MYSQL_USER: user_name
-      MYSQL_PASSWORD: user_pass
+      - nginx-v:/var/www/html
     restart: always
-  
+ 
+
+volumes:
+  nginx-v:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/aderose/data
+
