@@ -3,6 +3,9 @@
 build:
 		docker-compose -f srcs/docker-compose.yml build $(c)
 
+config:
+		docker-compose -f srcs/docker-compose.yml config $(c)
+
 up:
 		docker-compose -f srcs/docker-compose.yml up -d $(c)
 	
@@ -25,7 +28,7 @@ restart:
 re:		stop build up
 
 purge:
-		docker rmi maria-db
+		docker rmi mariadb
 		docker rmi wordpress
 		docker rmi nginx
 		docker rmi debian:buster

@@ -2,22 +2,52 @@ version: "3"
 
 services:
 
-  nginx:
-    build: ./requirements/nginx
-    image: nginx:mynginx
-    container_name: nginx
+#in container /var/log/service/log..access...
+
+#  nginx:
+#    build: ./requirements/nginx
+#    image: nginx
+#    container_name: nginx
+#    ports:
+#      - 443:443
+#    volumes:
+#      - nginx-v:/var/www/html
+#    restart: always
+
+  mariadb:
+    build: ./requirements/mariadb
+    image: mariadb
+    env_file:
+      - ./.env
+    container_name: mariadb
     ports:
-      - 443:443
+      - 3306:3306
     volumes:
-      - nginx-v:/var/www/html
+      - DB:/var/lib/mysql
     restart: always
- 
+
+#  wordpress:
+#    build: ./requirements/wordpress
+#    image: wordpress
+#    container_name: wordpress
+#    ports:
+#      - 9000:9000
+#      - 3306:3306
+#    volumes:
+#      - mariadb-v:
+#	restart: always
+
 
 volumes:
-  nginx-v:
+  wp:
     driver: local
     driver_opts:
       type: none
       o: bind
-      device: /home/aderose/data
-
+      device: /home/aderose/data/wp
+  DB:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/aderose/data/mariadb
