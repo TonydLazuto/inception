@@ -4,21 +4,21 @@ services:
 
 #in container /var/log/service/log..access...
 
-  nginx:
+#  nginx:
 #    depends on:
 #      - wordpress
-    build: ./requirements/nginx
-    image: nginx
-    env_file:
-      - ./.env
-    container_name: nginx
-    ports:
-      - 443:443
-    volumes:
-      - nginx-v:/var/www/html
-    restart: always
-    networks:
-      - webapp
+#    build: ./requirements/nginx
+#    image: nginx
+#    env_file:
+#      - ./.env
+#    container_name: nginx
+#    ports:
+#      - 443:443
+#    volumes:
+#      - nginx-v:/var/www/html
+#    restart: always
+#    networks:
+#      - webapp
 
 #  mariadb:
 #    build: ./requirements/mariadb
@@ -30,35 +30,35 @@ services:
 #    ports:
 #      - 3306:3306
 #    volumes:
-#      - DB:/var/lib/mysql
+#      - mariadb-v:/var/lib/mysql
 #    networks:
 #      - webapp
 
-#  wordpress:
+  wordpress:
 #    depends on:
 #      - mariadb
-#    build: ./requirements/wordpress
-#    image: wordpress
-#    env_file:
-#      - ./.env
-#    container_name: wordpress
-#    ports:
-#      - 9000:9000
-#    volumes:
-#      - mariadb-v:/var/www/html
-#    restart: always
-#    networks:
-#      - webapp
+    build: ./requirements/wordpress
+    image: wordpress
+    env_file:
+      - ./.env
+    container_name: wordpress
+    ports:
+      - 9000:9000
+    volumes:
+      - wp-v:/var/www/html
+    restart: always
+    networks:
+      - webapp
 
 
 volumes:
-  wp:
+  wp-v:
     driver: local
     driver_opts:
       type: none
       o: bind
       device: /home/aderose/data/wp
-  DB:
+  mariadb-v:
     driver: local
     driver_opts:
       type: none
