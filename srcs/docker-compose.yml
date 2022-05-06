@@ -17,9 +17,12 @@ services:
 #    volumes:
 #      - nginx-v:/var/www/html
 #    restart: always
+#    networks:
+#      - webapp
 
   mariadb:
     build: ./requirements/mariadb
+    restart: always
     image: mariadb
     env_file:
       - ./.env
@@ -28,7 +31,8 @@ services:
       - 3306:3306
     volumes:
       - DB:/var/lib/mysql
-    restart: always
+    networks:
+      - webapp
 
 #  wordpress:
 #    depends on:
@@ -43,6 +47,8 @@ services:
 #    volumes:
 #      - mariadb-v:/var/www/html
 #    restart: always
+#    networks:
+#      - webapp
 
 
 volumes:
@@ -64,3 +70,7 @@ volumes:
       type: none
       o: bind
       device: /home/aderose/data/nginx-v
+
+networks:
+  webapp:
+    driver: bridge

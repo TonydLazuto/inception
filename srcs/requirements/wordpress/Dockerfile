@@ -2,7 +2,7 @@ FROM debian:buster
 
 RUN apt-get -y update \
     && apt-get -y upgrade \
-	&& apt-get -y install wget procps vim \
+	&& apt-get -y install wget procps vim
 	#install wp-cli tools
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
 	&& chmod +x wp-cli.phar \

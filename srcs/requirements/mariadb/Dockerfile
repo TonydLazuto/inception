@@ -7,8 +7,9 @@ RUN apt-get -y update \
 
 #COPY ./conf/db.sql /tmp/db.sql
 COPY ./conf/db2.sql /tmp/db.sql
+COPY ./tools /tmp/tools
 
 EXPOSE 3306
 
-ENTRYPOINT ["/bin/sh", "tools/run-mysql.sh"]
-CMD ["mysqld_safe"]
+CMD ["/bin/sh", "/tmp/tools/run-mysql.sh"]
+ENTRYPOINT ["/usr/bin/mysqld_safe"]
