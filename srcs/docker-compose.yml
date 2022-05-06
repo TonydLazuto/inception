@@ -41,7 +41,7 @@ services:
 #    ports:
 #      - 9000:9000
 #    volumes:
-#      - mariadb-v:
+#      - mariadb-v:/var/www/html
 #    restart: always
 
 
