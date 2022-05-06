@@ -6,8 +6,8 @@ RUN apt-get -y update \
 	&& apt-get install -y vim \
     && apt-get -y install nginx \
 	&& mkdir /etc/nginx/ssl \
-	&& openssl req -x509 -newkey rsa:4096 -sha256 -days 365 -nodes -out /etc/nginx/ssl/key.crt -keyout /etc/nginx/ssl/mykey.key -subj "/C=FR/ST=Paris/L=Paris/OU=ad/CN=localsite"
-
+	&& openssl req -x509 -newkey rsa:4096 -sha256 -days 365 -nodes -out /etc/nginx/ssl/key.crt -keyout /etc/nginx/ssl/mykey.key -subj "/C=FR/ST=Paris/L=Paris/CN=localsite"
+    && chmod 777 /etc/nginx/ssl/*
 #USER myuser
 
 EXPOSE 443

@@ -5,8 +5,12 @@ services:
 #in container /var/log/service/log..access...
 
 #  nginx:
+#    depends on:
+#      - wordpress
 #    build: ./requirements/nginx
 #    image: nginx
+#    env_file:
+#      - ./.env
 #    container_name: nginx
 #    ports:
 #      - 443:443
@@ -27,15 +31,18 @@ services:
     restart: always
 
 #  wordpress:
+#    depends on:
+#      - mariadb
 #    build: ./requirements/wordpress
 #    image: wordpress
+#    env_file:
+#      - ./.env
 #    container_name: wordpress
 #    ports:
 #      - 9000:9000
-#      - 3306:3306
 #    volumes:
 #      - mariadb-v:
-#	restart: always
+#    restart: always
 
 
 volumes:
@@ -51,3 +58,9 @@ volumes:
       type: none
       o: bind
       device: /home/aderose/data/mariadb
+  nginx-v:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/aderose/data/nginx-v
