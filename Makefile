@@ -1,4 +1,4 @@
-.PHONY:	build up down destroy stop restart purge prune display logs
+.PHONY:	build up down stop restart purge prune display logs
 
 build:
 		@mkdir -p /home/aderose/data/nginx-v /home/aderose/data/wp /home/aderose/data/mariadb
@@ -18,7 +18,6 @@ stop:
 		docker-compose -f srcs/docker-compose.yml stop $(c)
 
 restart:
-		docker-compose -f srcs/docker-compose.yml stop $(c)
 		docker-compose -f srcs/docker-compose.yml down $(c)
 		docker-compose -f srcs/docker-compose.yml up -d $(c)
 
