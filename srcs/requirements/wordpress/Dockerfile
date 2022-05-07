@@ -2,7 +2,7 @@ FROM debian:buster
 
 RUN apt-get -y update \
     && apt-get -y upgrade \
-	&& apt-get -y install wget procps curl vim \
+	&& apt-get -y install wget vim procps curl \
 	php php-cli php-fpm php-json php-mysql \
 	php-zip php-gd  php-mbstring php-curl \
 	php-xml php-pear php-bcmath
@@ -14,6 +14,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 RUN wp-cli core download --allow-root
 
 COPY ./tools/wp-config.sh /tmp/wp-config.sh
+COPY ./conf/wp-config.php /var/www/html/wp-config.php
 
 EXPOSE 9000 3306
 
