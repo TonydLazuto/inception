@@ -19,6 +19,7 @@ re:		stop build up
 build:
 		@mkdir -p /home/aderose/data/nginx-v /home/aderose/data/wp /home/aderose/data/mariadb
 		docker-compose -f srcs/docker-compose.yml build $(c)
+buildup: build up
 
 config:
 		docker-compose -f srcs/docker-compose.yml config $(c)
