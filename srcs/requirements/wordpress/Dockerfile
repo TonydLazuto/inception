@@ -21,14 +21,14 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 WORKDIR /var/www/html
 
 # COPY ./tools/wp-config.sh /tmp/wp-config.sh
-COPY ./conf/wp-config.php /var/www/html/wp-config.php
+# COPY ./conf/wp-config.php /var/www/html/wp-config.php
 
 RUN wp-cli core download --allow-root --path=./
+RUN chown -R www-data:www-data /var/www/html
 
 
 # RUN chmod +x /tmp/wp-config.sh
 
 EXPOSE 9000
 
-# ENTRYPOINT ["/bin/sh", "-x", "/tmp/wp-config.sh"]
-CMD ["/sbin/php7.4-fpm"]
+# CMD ["/bin/sh", "-x", "/tmp/wp-config.sh"]
