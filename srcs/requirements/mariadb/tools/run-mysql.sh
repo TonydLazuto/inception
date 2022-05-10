@@ -10,17 +10,27 @@
 #     Quiet; do not write anything to standard output.
 #     Exit immediately with zero status if any match is found,
 #     even if an error was detected. Also see the -s or --no-messages option.
-if grep -Fxq "[mysqld]"; then
-    sed '/^[mysqld]/a skip-grant-tables' /etc/mysql/my.cnf
-else
-    echo "[mysqld]\nskip-grant-tables" >> /etc/mysql/my.cnf
-fi
+
+# if grep -Fxq "[mysqld]"; then
+#     sed '/^[mysqld]/a skip-grant-tables' /etc/mysql/my.cnf
+# else
+#     echo "[mysqld]\nskip-grant-tables" >> /etc/mysql/my.cnf
+# fi
 
 mysqld_safe
-mysql -u root --skip-password < /tmp/db.sql
-# echo "GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER'@'$DB_HOST' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD' WITH GRANT OPTION;" | mysql -u root --skip-password
+mysql -u root --skip-password < /tmp/db.sql 
+#envsubst
+# mysql -u root --skip-password << EOSQL
+# CREATE DATABASE IF NOT EXISTS ${DB_NAME};
+# GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${MYSQL_USER}'@'${DB_HOST}' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' WITH GRANT OPTION;
+# FLUSH PRIVILEGES;
+# CREATE TABLE testtab(id INTEGER AUTO_INCREMENT, name TEXT, PRIMARY KEY (id));
+# EOSQL
+
+# echo "CREATE DATABASE IF NOT EXISTS ${DB_NAME};" | mysql -u root --skip-password
+# echo "GRANT ALL PRIVILEGES ON *.* TO '${MYSQL_USER}'@'${DB_HOST}' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' WITH GRANT OPTION;" | mysql -u root --skip-password
 # echo "FLUSH PRIVILEGES;" | mysql -u root --skip-password
+
 kill -KILL mysqld_safe
 
 exec "$@"
-

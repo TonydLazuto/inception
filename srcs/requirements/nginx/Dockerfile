@@ -8,6 +8,7 @@ RUN apt-get -y update && apt-get -y upgrade \
 		-keyout /etc/nginx/ssl/mykey.key \
 		-subj "/C=FR/ST=Paris/CN=localsite" \
     && chmod 755 /etc/nginx/ssl/*
+
 #USER myuser
 
 EXPOSE 443

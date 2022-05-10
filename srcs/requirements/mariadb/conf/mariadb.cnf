@@ -2,13 +2,22 @@
 
 [client-server]
 port=3306
-socket=/tmp/mysql-dbug.sock
+socket=/var/run/mysqld/mysqld.sock
 
 [mysqld]
 # Directory where you want to put your data
-data=/var/lib/mysql
-port = 3306
-socket = /tmp/mysql.sock
+skip-grant-tables
+datadir=/var/lib/mysql
+port=3306
+socket=/var/run/mysqld/mysqld.sock
+log_error=/var/log/mysql/mysql_error.log
+bind-address=$DOMAIN_NAME
+
+[mysqld_safe]
+datadir=/var/lib/mysql
+port=3306
+socket=/var/run/mysqld/mysqld.sock
+log_error=/var/log/mysql/mysql_error.log
 
 # This will be passed to all mysql clients
 # [client]
@@ -19,5 +28,5 @@ socket = /tmp/mysql.sock
 
 [mariadb]
 language=/my/maria-5.5/sql/share/english/
-socket=/tmp/mysql-dbug.sock
+socket=/var/run/mysqld/mysqld.sock
 port=3306

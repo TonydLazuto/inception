@@ -4,21 +4,21 @@ services:
 
 #in container /var/log/service/log..access...
 
-  # nginx:
-  #   depends_on:
-  #     - wordpress
-  #   build: ./requirements/nginx
-  #   image: nginx
-  #   env_file:
-  #     - ./.env
-  #   container_name: nginx
-  #   ports:
-  #     - 443:443
-  #   volumes:
-  #     - nginx-v:/var/www/html
-  #   restart: always
-  #   networks:
-  #     - webapp
+  nginx:
+    depends_on:
+      - wordpress
+    build: ./requirements/nginx
+    image: nginx
+    env_file:
+      - ./.env
+    container_name: nginx
+    ports:
+      - 443:443
+    volumes:
+      - nginx-v:/var/www/html
+    restart: always
+    networks:
+      - webapp
 
   mariadb:
     build: ./requirements/mariadb
@@ -49,7 +49,6 @@ services:
     restart: always
     networks:
       - webapp
-
 
 volumes:
   wp-v:

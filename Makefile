@@ -1,8 +1,14 @@
 .PHONY:	build up down stop restart purge prune display logs
 
+HOME = /home/aderose/data
+
+vol_nginx=mkdir -p $(HOME)/nginx-v
+vol_wp=mkdir -p $(HOME)/wp
+vol_mariadb=mkdir -p $(HOME)/mariadb
+
 up:
-		@mkdir -p /home/aderose/data/nginx-v /home/aderose/data/wp /home/aderose/data/mariadb
-		docker-compose -f srcs/docker-compose.yml up -d $(c)
+		$(vol_nginx) $(vol_wp) $(vol_mariadb)
+		docker-compose -f srcs/docker-compose.yml up -d --build $(c)
 
 down:
 		docker-compose -f srcs/docker-compose.yml down $(c)
@@ -17,15 +23,14 @@ restart:
 re:		stop build up
 
 build:
-		@mkdir -p /home/aderose/data/nginx-v /home/aderose/data/wp /home/aderose/data/mariadb
+		$(vol_nginx) $(vol_wp) $(vol_mariadb)
 		docker-compose -f srcs/docker-compose.yml build $(c)
-buildup: build up
 
 config:
 		docker-compose -f srcs/docker-compose.yml config $(c)
 
 purge:
-		@sudo rm -rf /home/aderose/data/
+		@sudo rm -rf $(HOME)
 		docker rmi mariadb
 		docker rmi wordpress
 		docker rmi nginx
@@ -38,7 +43,7 @@ display:
 		docker volume ls
 
 prune: 
-		@sudo rm -rf /home/aderose/data/
+		@sudo rm -rf ${HOME}
 		docker system prune -a
 
 logs:
