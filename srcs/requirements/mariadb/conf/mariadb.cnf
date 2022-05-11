@@ -2,22 +2,18 @@
 
 [client-server]
 port=3306
-socket=/var/run/mysqld/mysqld.sock
 
 [mysqld]
 # Directory where you want to put your data
 skip-grant-tables
 datadir=/var/lib/mysql
 port=3306
-socket=/var/run/mysqld/mysqld.sock
 log_error=/var/log/mysql/mysql_error.log
 bind-address=$DOMAIN_NAME
 
 [mysqld_safe]
 datadir=/var/lib/mysql
 port=3306
-socket=/var/run/mysqld/mysqld.sock
-log_error=/var/log/mysql/mysql_error.log
 
 # This will be passed to all mysql clients
 # [client]

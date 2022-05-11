@@ -17,7 +17,22 @@
 #     echo "[mysqld]\nskip-grant-tables" >> /etc/mysql/my.cnf
 # fi
 
-mysqld_safe
+
+sed -i 's/bind-address/\#bind-address/g' /etc/mysql/mariadb.conf.d/50-server.cnf
+
+service mysql start
+
+
+until mysqladmin --host=$DB_HOST --user=$MYSQL_USER --skip-password ping; do
+	sleep 2s
+done
+
+echo "ALTER USER '$MYSQL_USER'@'$DB_HOST' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';" | mysql -uroot --skip-password
+# until mysqladmin --host=$DB_HOST --user=$MYSQL_USER --password=$MYSQL_ROOT_PASSWORD ping \
+#     && mariadb --host=$DB_HOST --user=$MYSQL_USER --password=$MYSQL_ROOT_PASSWORD -e "SHOW DATABASES;" | grep $DB_NAME; do
+# 	sleep 2s
+# done
+
 mysql -u root --skip-password < /tmp/db.sql 
 #envsubst
 # mysql -u root --skip-password << EOSQL
@@ -31,6 +46,7 @@ mysql -u root --skip-password < /tmp/db.sql
 # echo "GRANT ALL PRIVILEGES ON *.* TO '${MYSQL_USER}'@'${DB_HOST}' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' WITH GRANT OPTION;" | mysql -u root --skip-password
 # echo "FLUSH PRIVILEGES;" | mysql -u root --skip-password
 
-kill -KILL mysqld_safe
+service mysql stop
+# kill killall mysqld_safe
 
 exec "$@"
