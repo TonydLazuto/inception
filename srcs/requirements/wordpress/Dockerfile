@@ -24,19 +24,18 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 	#download worpdress
 	&& wp-cli core download --allow-root
 
-# RUN echo "<?php phpinfo(); ?>" >> /var/www/html/wp-content/index.php
+# RUN echo "<?php phpinfo(); ?>" > /var/www/html/wp-content/index.php
 
-WORKDIR /var/www/html
+COPY ./conf/setup.sh /var/www/html/setup.sh
+COPY ./conf/wp-config.php /var/www/html/wp-config.php
 
 RUN chown -R www-data /var/www/* && chmod -R 755 /var/www/*
 
-COPY ./conf/wp-config.sh /tmp/wp-config.sh
-COPY ./conf/wp-config.php /var/www/html/wp-config.php
+WORKDIR /var/www/html
 
 #--path=./
-RUN chmod +x /tmp/wp-config.sh
 
 EXPOSE 9000
 
-ENTRYPOINT ["/bin/sh", "-x", "/tmp/wp-config.sh"]
+# ENTRYPOINT ["/bin/sh", "-x", "setup.sh"]
 CMD ["/usr/sbin/php-fpm7.3", "-R", "--nodaemonize"]
