@@ -37,5 +37,5 @@ WORKDIR /var/www/html
 
 EXPOSE 9000
 
-# ENTRYPOINT ["/bin/sh", "-x", "setup.sh"]
+ENTRYPOINT ["/bin/sh", "-xv", "setup.sh"]
 CMD ["/usr/sbin/php-fpm7.3", "-R", "--nodaemonize"]

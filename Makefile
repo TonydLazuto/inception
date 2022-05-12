@@ -6,22 +6,20 @@ vol_nginx=mkdir -p $(HOME)/nginx-v
 vol_wp=mkdir -p $(HOME)/wp
 vol_mariadb=mkdir -p $(HOME)/mariadb
 
-up:
+up:		rm-volume
 		$(vol_nginx) $(vol_wp) $(vol_mariadb)
-		docker-compose -f srcs/docker-compose.yml up -d --build $(c)
+		docker-compose -f srcs/docker-compose.yml up -d -V --build --remove-orphans $(c)
 
 down:
+		docker-compose -f srcs/docker-compose.yml down -v --remove-orphans $(c)
 		@sudo rm -rf $(HOME)
-		docker-compose -f srcs/docker-compose.yml down $(c)
 
 stop:
 		docker-compose -f srcs/docker-compose.yml stop $(c)
 
-restart:
-		docker-compose -f srcs/docker-compose.yml down $(c)
-		docker-compose -f srcs/docker-compose.yml up -d $(c)
+restart: stop up
 
-re:		stop build up
+re:		down build up
 
 build:
 		$(vol_nginx) $(vol_wp) $(vol_mariadb)
@@ -30,12 +28,8 @@ build:
 config:
 		docker-compose -f srcs/docker-compose.yml config $(c)
 
-purge:
+rm-volume:
 		@sudo rm -rf $(HOME)
-		docker rmi mariadb
-		docker rmi wordpress
-		docker rmi nginx
-		docker rmi debian:buster
 
 display:
 		docker ps -a
@@ -43,8 +37,7 @@ display:
 		docker network ls
 		docker volume ls
 
-prune: 
-		@sudo rm -rf ${HOME}
+prune:	down rm-volume
 		docker system prune -a
 
 logs:
