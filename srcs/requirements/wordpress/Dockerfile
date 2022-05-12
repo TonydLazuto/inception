@@ -26,16 +26,15 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 
 # RUN echo "<?php phpinfo(); ?>" > /var/www/html/wp-content/index.php
 
-COPY ./conf/setup.sh /var/www/html/setup.sh
-COPY ./conf/wp-config.php /var/www/html/wp-config.php
+COPY ./conf/setup.sh /tmp/setup.sh
+# COPY ./conf/wp-config.php /var/www/html/wp-config.php
 
-RUN chown -R www-data /var/www/* && chmod -R 755 /var/www/*
+RUN	mkdir -p /var/www/html && chown -R www-data /var/www/* && chmod -R 755 /var/www/*
 
 WORKDIR /var/www/html
-
 #--path=./
 
 EXPOSE 9000
 
-ENTRYPOINT ["/bin/sh", "-xv", "setup.sh"]
+ENTRYPOINT ["/bin/sh", "-xv", "/tmp/setup.sh"]
 CMD ["/usr/sbin/php-fpm7.3", "-R", "--nodaemonize"]

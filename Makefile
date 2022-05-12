@@ -37,7 +37,10 @@ display:
 		docker network ls
 		docker volume ls
 
-prune:	down rm-volume
+prune:
+		docker system prune -a
+
+fclean:	down rm-volume
 		docker system prune -a
 
 logs:

@@ -19,22 +19,17 @@
 
 sed -i 's/bind-address/\#bind-address/g' /etc/mysql/mariadb.conf.d/50-server.cnf
 
-service mysql start
+# service mysql start
 
-echo "SET PASSWORD FOR '$MYSQL_USER'@'$DB_HOST' = PASSWORD('$MYSQL_ROOT_PASSWORD');" | mysql -uroot -p
+echo "CREATE USER '$MYSQL_USER'@'$MYSQL_DATABASE' IDENTIFIED BY '$MYSQL_PASSWORD';" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
+echo "GRANT ALL PRIVILEGES ON $MYSQL_DATABASE.* TO '$MYSQL_USER'@'$MYSQL_DATABASE';" | mysql -u$MYSQL_USER -p$MYSQL_PASSWORD
+echo "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};" | mysql -u$MYSQL_USER -p$MYSQL_PASSWORD
+echo "FLUSH PRIVILEGES;" | mysql -u$MYSQL_USER -p$MYSQL_PASSWORD
 
-# envsubst < /tmp/db.sql | mysql -uroot -p $MYSQL_ROOT_PASSWORD
+# echo "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
+# echo "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'${DB_HOST}' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' WITH GRANT OPTION;" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
+# echo "CREATE TABLE testtab(id INTEGER AUTO_INCREMENT, name TEXT, PRIMARY KEY (id));" | mysql -uroot -p$MYSQL_ROOT_PASSWORD# echo "FLUSH PRIVILEGES;" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
 
-# echo "CREATE DATABASE IF NOT EXISTS ${DB_NAME};" | mysql -u root --skip-password
-# echo "GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${MYSQL_USER}'@'${DB_HOST}' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' WITH GRANT OPTION;" | mysql -u root --skip-password
-# echo "FLUSH PRIVILEGES;" | mysql -u root --skip-password
-# echo "CREATE TABLE testtab(id INTEGER AUTO_INCREMENT, name TEXT, PRIMARY KEY (id));" | mysql -u root --skip-password
-
-# echo "CREATE DATABASE IF NOT EXISTS ${DB_NAME};" | mysql -u root --skip-password
-# echo "GRANT ALL PRIVILEGES ON *.* TO '${MYSQL_USER}'@'${DB_HOST}' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' WITH GRANT OPTION;" | mysql -u root --skip-password
-# echo "FLUSH PRIVILEGES;" | mysql -u root --skip-password
-
-service mysql stop
-# kill killall mysqld_safe
+# service mysql stop
 
 exec "$@"
