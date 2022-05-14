@@ -9,13 +9,13 @@ protocol = tcp
 # Directory where you want to put your data
 # user = $MYSQL_USER
 # datadir = /var/lib/mysql
-port = 3306
-protocol = tcp
+# port = 3306
+# protocol = tcp
 
 # This will be passed to all mysql clients
 # [client]
-port = 3306
-protocol = tcp
+# port = 3306
+# protocol = tcp
 # password = my_password
 
 # [mysqld_safe]

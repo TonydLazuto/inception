@@ -17,11 +17,12 @@
 #     echo "[mysqld]\nskip-grant-tables" >> /etc/mysql/my.cnf
 # fi
 
-# sed -i 's/bind-address/\#bind-address/g' /etc/mysql/mariadb.conf.d/50-server.cnf
+sed -i 's/bind-address/\#bind-address/g' /etc/mysql/mariadb.conf.d/50-server.cnf
 
 service mysql start
 
 echo "CREATE DATABASE IF NOT EXISTS $DB_NAME;" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
+# CREATE USER
 echo "CREATE USER '$MYSQL_USER' IDENTIFIED BY '$MYSQL_PASSWORD';" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
 echo "GRANT ALL PRIVILEGES ON *.* TO '$MYSQL_USER';" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
 echo "CREATE TABLE $DB_NAME.test(id INTEGER AUTO_INCREMENT, name varchar(255), PRIMARY KEY (id));" | mysql -u$MYSQL_USER -p$MYSQL_PASSWORD
@@ -29,10 +30,6 @@ echo "INSERT INTO $DB_NAME.test VALUES (1,'henry');" | mysql -u$MYSQL_USER -p$MY
 echo "INSERT INTO $DB_NAME.test VALUES (2,'titi');" | mysql -u$MYSQL_USER -p$MYSQL_PASSWORD
 echo "CREATE USER '$MYSQL_USER2' IDENTIFIED BY '$MYSQL_PASSWORD2';" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
 echo "GRANT SHOW DATABASES, SELECT ON *.* TO '$MYSQL_USER2';" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
-
-# echo "CREATE DATABASE IF NOT EXISTS ${MYSQL_DATABASE};" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
-# echo "GRANT ALL PRIVILEGES ON ${MYSQL_DATABASE}.* TO '${MYSQL_USER}'@'${DB_HOST}' IDENTIFIED BY '${MYSQL_ROOT_PASSWORD}' WITH GRANT OPTION;" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
-
 
 service mysql stop
 

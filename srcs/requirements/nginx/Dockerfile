@@ -12,6 +12,7 @@ RUN apt-get -y update && apt-get -y upgrade \
 #USER myuser
 
 EXPOSE 443
+EXPOSE 80
 
 COPY ./conf/fastcgi_common /etc/nginx/conf.d/fastcgi_common
 COPY ./conf/fastcgi_common /etc/nginx/fastcgi_common

@@ -29,7 +29,7 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 COPY ./conf/setup.sh /tmp/setup.sh
 # COPY ./conf/wp-config.php /var/www/html/wp-config.php
 
-RUN	mkdir -p /var/www/html && chown -R www-data /var/www/* && chmod -R 755 /var/www/*
+RUN	chown -R www-data /var/www/* && chmod -R 755 /var/www/*
 
 WORKDIR /var/www/html
 #--path=./
