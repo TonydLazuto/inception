@@ -1,18 +1,19 @@
 # Example mysql config file.
 
-# [client-server]
-# port = 3306
+[client-server]
+port = 3306
+protocol = tcp
 # socket = /var/run/mysqld/mysqld.sock
 
 [mysqld]
 # Directory where you want to put your data
-user = $MYSQL_USER
-datadir = /var/lib/mysql
+# user = $MYSQL_USER
+# datadir = /var/lib/mysql
 port = 3306
-# protocol = tcp
+protocol = tcp
 
 # This will be passed to all mysql clients
-[client]
+# [client]
 port = 3306
 protocol = tcp
 # password = my_password

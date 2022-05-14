@@ -39,6 +39,7 @@ display:
 
 prune:
 		docker system prune -a
+		docker network prune
 
 fclean:	down rm-volume
 		docker system prune -a
