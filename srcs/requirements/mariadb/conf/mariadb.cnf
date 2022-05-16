@@ -3,30 +3,26 @@
 [client-server]
 port = 3306
 protocol = tcp
-# socket = /var/run/mysqld/mysqld.sock
 
 [mysqld]
 # Directory where you want to put your data
-# user = $MYSQL_USER
+bind-address = 0.0.0.0
+port = 3306
+# user = root
 # datadir = /var/lib/mysql
-# port = 3306
-# protocol = tcp
 
 # This will be passed to all mysql clients
 # [client]
-# port = 3306
-# protocol = tcp
 # password = my_password
 
-# [mysqld_safe]
-# datadir = /var/lib/mysql
-# port = 3306
-# socket = /var/run/mysqld/mysqld.sock
-# bind-address = $DOMAIN_NAME
+[mysqld_safe]
+user = root
+datadir = /var/lib/mysql
+port = 3306
 
-# [mariadb]
+[mariadb]
 # language = /my/maria-5.5/sql/share/english/
-# port = 3306
-# datadir = /var/lib/mysql
+port = 3306
+datadir = /var/lib/mysql
 # socket = /var/run/mysqld/mysqld.sock
-# bind-address = $DOMAIN_NAME
+bind-address = 0.0.0.0

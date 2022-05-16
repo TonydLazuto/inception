@@ -15,7 +15,7 @@ services:
     ports:
       - 443:443
     volumes:
-      - nginx-v:/var/www/html
+      - wp-v:/var/www/html
     restart: always
     networks:
       - webapp
@@ -27,8 +27,6 @@ services:
     env_file:
       - ./.env
     container_name: mariadb
-    ports:
-      - 3306:3306
     volumes:
       - mariadb-v:/var/lib/mysql
     networks:
@@ -42,8 +40,6 @@ services:
     env_file:
       - ./.env
     container_name: wordpress
-    ports:
-      - 9000:9000
     volumes:
       - wp-v:/var/www/html
     restart: always
@@ -63,12 +59,6 @@ volumes:
       type: none
       o: bind
       device: /home/aderose/data/mariadb
-  nginx-v:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/aderose/data/nginx-v
 
 networks:
   webapp:
