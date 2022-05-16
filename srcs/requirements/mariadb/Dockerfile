@@ -2,7 +2,7 @@ FROM debian:buster
 
 RUN apt-get -y update \
     && apt-get -y upgrade \
-	&& apt-get -y install vim procps gettext-base mariadb-server
+	&& apt-get -y install vim procps gettext-base mariadb-server mariadb-client
 
 # COPY ./conf/*.sql /tmp/
 COPY ./conf/mariadb.cnf /etc/mysql/mariadb.cnf
