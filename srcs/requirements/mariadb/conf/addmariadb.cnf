@@ -1,0 +1,5 @@
+port=3306
+protocol=tcp
+[mysqld]
+skip-networking=0
+skip-bind-address

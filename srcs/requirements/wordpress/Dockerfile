@@ -36,4 +36,4 @@ RUN	chown -R www-data /var/www/* && chmod -R 755 /var/www/* \
 EXPOSE 9000
 
 ENTRYPOINT ["/bin/sh", "-xv", "/tmp/setup.sh"]
-CMD ["/usr/sbin/php-fpm7.3", "-R", "--nodaemonize"]
+CMD ["/usr/sbin/php-fpm7.3", "--nodaemonize"]

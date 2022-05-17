@@ -2,12 +2,11 @@
 
 HOME = /home/aderose/data
 
-vol_nginx=mkdir -p $(HOME)/nginx-v
-vol_wp=mkdir -p $(HOME)/wp
-vol_mariadb=mkdir -p $(HOME)/mariadb
+vol_wp=@mkdir -p $(HOME)/wp
+vol_mariadb=@mkdir -p $(HOME)/mariadb
 
-up:		rm-volume
-		$(vol_nginx) $(vol_wp) $(vol_mariadb)
+up:
+		$(vol_wp) $(vol_mariadb)
 		docker-compose -f srcs/docker-compose.yml up -d -V --build --remove-orphans $(c)
 
 down:
@@ -22,7 +21,7 @@ restart: stop up
 re:		down build up
 
 build:
-		$(vol_nginx) $(vol_wp) $(vol_mariadb)
+		$(vol_wp) $(vol_mariadb)
 		docker-compose -f srcs/docker-compose.yml build $(c)
 
 config:

@@ -1,5 +1,19 @@
 version: "3"
 
+volumes:
+  wp-v:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/aderose/data/wp
+  mariadb-v:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: /home/aderose/data/mariadb
+
 services:
 
 #in container /var/log/service/log..access...
@@ -15,7 +29,7 @@ services:
     ports:
       - 443:443
     volumes:
-      - wp-v:/var/www/html
+      - wp-v:/var/www/html:rw
     restart: always
     networks:
       - webapp
@@ -41,24 +55,10 @@ services:
       - ./.env
     container_name: wordpress
     volumes:
-      - wp-v:/var/www/html
+      - wp-v:/var/www/html:rw
     restart: always
     networks:
       - webapp
-
-volumes:
-  wp-v:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/aderose/data/wp
-  mariadb-v:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: /home/aderose/data/mariadb
 
 networks:
   webapp:

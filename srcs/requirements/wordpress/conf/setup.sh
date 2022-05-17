@@ -5,7 +5,7 @@
 # 	sleep 2s
 # done
 
-#Generate 'wp-config.php' 
+#Generate 'wp-config.php'
 wp-cli config create --allow-root --dbhost=$DB_HOST --dbname=$DB_NAME --dbuser=$ADMIN_USERNAME --dbpass=$ADMIN_PASSWORD --locale='en_DB'
 #install wordpress
 wp-cli core install --allow-root --url=$DB_HOST --title=$DB_TITLE --admin_user=$ADMIN_USERNAME --admin_password=$ADMIN_PASSWORD --admin_email=$ADMIN_EMAIL
