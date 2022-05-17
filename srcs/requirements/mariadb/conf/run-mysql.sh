@@ -10,10 +10,10 @@ echo "INSERT INTO $DB_NAME.test VALUES (1,'henry');" | mysql -u$MYSQL_USER -p$MY
 echo "INSERT INTO $DB_NAME.test VALUES (2,'titi');" | mysql -u$MYSQL_USER -p$MYSQL_PASSWORD
 echo "CREATE USER '$MYSQL_USER2' IDENTIFIED BY '$MYSQL_PASSWORD2';" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
 echo "GRANT SHOW DATABASES, SELECT ON *.* TO '$MYSQL_USER2';" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
-# echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
 echo "GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD' WITH GRANT OPTION;" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
+echo "ALTER USER 'root'@'localhost' IDENTIFIED BY '$MYSQL_ROOT_PASSWORD';" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
 echo "FLUSH PRIVILEGES;" | mysql -uroot -p$MYSQL_ROOT_PASSWORD
 
-service mysql stop
+mysqladmin -uroot -p$MYSQL_ROOT_PASSWORD shutdown
 
 exec "$@"

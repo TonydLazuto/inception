@@ -6,9 +6,9 @@ RUN apt-get -y update \
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN    apt-get install -y apt-transport-https lsb-release ca-certificates \
-       && wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
-       && echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" >> /etc/apt/sources.list.d/php.list
+RUN apt-get install -y apt-transport-https lsb-release ca-certificates \
+    && wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg \
+    && echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" >> /etc/apt/sources.list.d/php.list
 
 	#install php and extensions
 RUN apt-get update && apt-get install -y php7.3-fpm php7.3-opcache \
@@ -22,11 +22,11 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 	&& mv wp-cli.phar /usr/local/bin/wp-cli
 
 WORKDIR /var/www/html
+
 	#download worpdress
 RUN wp-cli core download --allow-root
 
 COPY ./conf/setup.sh /tmp/setup.sh
-# COPY ./conf/wp-config.php /var/www/html/wp-config.php
 
 RUN	chown -R www-data /var/www/* && chmod -R 755 /var/www/* \
 	&& chmod 666 /etc/php/7.3/fpm/pool.d/www.conf \
