@@ -18,7 +18,7 @@ stop:
 
 restart: stop up
 
-re:		down build up
+re:		down up
 
 build:
 		$(vol_wp) $(vol_mariadb)
@@ -37,8 +37,9 @@ display:
 		docker volume ls
 
 prune:
-		docker system prune -a
-		docker network prune
+		echo y | docker system prune
+		echo y | docker system prune -a
+		echo y | docker network prune
 
 fclean:	down rm-volume
 		docker system prune -a

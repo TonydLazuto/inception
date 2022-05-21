@@ -13,7 +13,7 @@ RUN apt-get -y update && apt-get -y upgrade \
 
 EXPOSE 443
 
-COPY ["./conf/fastcgi_common", "./conf/nginx.conf", "/etc/nginx/conf.d/"]
-COPY ["./conf/fastcgi_common", "./conf/nginx.conf", "/etc/nginx/"]
+COPY ["./conf/nginx.conf", "/etc/nginx/conf.d/"]
+COPY ["./conf/nginx.conf", "/etc/nginx/"]
 
 CMD ["nginx", "-g", "daemon off;"]
