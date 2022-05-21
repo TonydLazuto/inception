@@ -2,7 +2,7 @@ FROM debian:buster
 
 RUN apt-get -y update \
     && apt-get -y upgrade \
-	&& apt-get -y install wget vim procps curl mariadb-client net-tools
+	&& apt-get -y install vim procps curl mariadb-client net-tools
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -18,17 +18,18 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 	&& mv wp-cli.phar /usr/local/bin/wp-cli
 
 WORKDIR /var/www/html
+
 RUN	chown -R www-data /var/www/* && chmod -R 755 /var/www/*
 
 	#download worpdress
-RUN wp-cli core download --allow-root
+RUN	wp-cli core download --allow-root
 
 RUN chmod 666 /etc/php/7.3/fpm/pool.d/www.conf \
 	&& sed -i 's/^listen =.*.sock/listen = wordpress\:9000/g' /etc/php/7.3/fpm/pool.d/www.conf
 
 COPY ./conf/setup.sh /tmp/setup.sh
 
-EXPOSE 9000
+# EXPOSE 9000
 
 ENTRYPOINT ["/bin/sh", "-xv", "/tmp/setup.sh"]
 CMD ["/usr/sbin/php-fpm7.3", "--nodaemonize"]

@@ -40,6 +40,7 @@ prune:
 		echo y | docker system prune
 		echo y | docker system prune -a
 		echo y | docker network prune
+		docker system prune -f
 
 fclean:	down rm-volume
 		docker system prune -a

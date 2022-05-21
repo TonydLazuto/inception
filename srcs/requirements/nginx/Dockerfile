@@ -9,8 +9,6 @@ RUN apt-get -y update && apt-get -y upgrade \
 		-subj "/C=FR/ST=Paris/CN=localsite" \
     && chmod 755 /etc/nginx/ssl/*
 
-#USER myuser
-
 EXPOSE 443
 
 COPY ["./conf/nginx.conf", "/etc/nginx/conf.d/"]
