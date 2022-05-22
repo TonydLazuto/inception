@@ -2,16 +2,13 @@
 
 HOME = /home/aderose/data
 
-vol_wp=@mkdir -p $(HOME)/wp
-vol_mariadb=@mkdir -p $(HOME)/mariadb
-
 up:
-		$(vol_wp) $(vol_mariadb)
+		mkdir -p $(HOME)/wp
+		mkdir -p $(HOME)/mariadb
 		docker-compose -f srcs/docker-compose.yml up -d -V --build --remove-orphans $(c)
 
 down:
 		docker-compose -f srcs/docker-compose.yml down -v --remove-orphans $(c)
-		@sudo rm -rf $(HOME)
 
 stop:
 		docker-compose -f srcs/docker-compose.yml stop $(c)
@@ -21,7 +18,8 @@ restart: stop up
 re:		down up
 
 build:
-		$(vol_wp) $(vol_mariadb)
+		mkdir -p $(HOME)/wp
+		mkdir -p $(HOME)/mariadb
 		docker-compose -f srcs/docker-compose.yml build $(c)
 
 config:
@@ -37,13 +35,11 @@ display:
 		docker volume ls
 
 prune:
-		echo y | docker system prune
-		echo y | docker system prune -a
+		echo y | docker system prune --all
 		echo y | docker network prune
-		docker system prune -f
+		docker system prune --force
 
-fclean:	down rm-volume
-		docker system prune -a
+fclean:	down rm-volume prune
 
 logs:
 		docker-compose -f srcs/docker-compose.yml logs --tail=100 -f $(c)
