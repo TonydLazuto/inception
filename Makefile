@@ -1,4 +1,4 @@
-.PHONY:	build up down stop restart purge prune display logs
+.PHONY:	build up down stop restart re config prune display logs rm-volume fclean
 
 HOME = /home/aderose/data
 
